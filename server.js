@@ -1,55 +1,16 @@
-const express = require('express'),
-    bodyParser = require('body-parser'),
-    mongodb = require('mongodb').MongoClient,
-    assert = require('assert'),
-    objectId = require('mongodb').ObjectId,
-    dotenv = require('dotenv').config;
-    app = express();
-
-//body-parser
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
+var app = require('./config/config'),
+    database = require('./config/mongo/mongodb');
 
 const port = 8080;
 app.listen(port);
-dotenv();
+
 console.log('Servidor está está escutando http://localhost:' + port);
 
-const url = `mongodb://${process.env.USER}:${process.env.PASS}@${process.env.HOST}:${process.env.PORT}/${process.env.DBNAME}`;
-
-/*
-const url = 'mongodb://localhost:27017';
-const dbName = 'whatsapp';
-const database = new mongodb(url, {
-    useNewUrlParser: true,
-    poolSize: 20,
-    socketTimeoutMS: 480000,
-    keepAlive: 300000,
-    keepAliveInitialDelay: 300000,
-    connectTimeoutMS: 30000,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
-});
-*/
-
 const dbName = 'whatsdb';
-const database = new mongodb(url, {
-    useNewUrlParser: true,
-    useNewUrlParser: true,
-    poolSize: 20,
-    socketTimeoutMS: 480000,
-    keepAlive: 300000,
-    keepAliveInitialDelay: 300000,
-    connectTimeoutMS: 30000,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000
-});
 
-// ! VERBOS E ROTAS 
+// ! VERBOS E ROTAS ==>
 app.get('/', function (req, res) {
-    
+
     res.send({
         msg: 'Olá'
     });
@@ -62,7 +23,7 @@ app.post('/api', function (req, res) {
 
     database.connect(function (err) {
         if (err)
-            res.json('ERROR CONECTION -- ' + err);
+            res.status(500).json('ERROR CONECTION -- ' + err);
         else {
             console.log('Connected successfully to MONGODB server')
             const db = database.db(dbName);
@@ -82,7 +43,7 @@ app.get('/api', function (req, res) {
 
     database.connect(function (err) {
         if (err)
-            res.json('ERROR CONECTION -- ' + err);
+            res.status(500).json('ERROR CONECTION -- ' + err);
         else {
             console.log('Connected successfully to MONGODB server')
             const db = database.db(dbName);
@@ -102,7 +63,7 @@ app.get('/api/:id', function (req, res) {
 
     database.connect(function (err) {
         if (err)
-            res.json('ERROR CONECTION -- ' + err);
+            res.status(500).json('ERROR CONECTION -- ' + err);
         else {
             const db = database.db(dbName);
             let collection = db.collection('campanha');
@@ -123,7 +84,7 @@ app.put('/api/:id', function (req, res) {
 
     database.connect(function (err) {
         if (err)
-            res.json('ERROR CONECTION -- ' + err);
+        res.status(500).json('ERROR CONECTION -- ' + err);
         else {
             const db = database.db(dbName);
             var collection = db.collection('campanha');
@@ -146,7 +107,7 @@ app.delete('/api/:id', function (req, res) {
 
     database.connect(function (err) {
         if (err)
-            res.json('ERROR CONECTION -- ' + err);
+            res.status(500).json('ERROR CONECTION -- ' + err);
         else {
             const db = database.db(dbName);
             var collection = db.collection('campanha');
