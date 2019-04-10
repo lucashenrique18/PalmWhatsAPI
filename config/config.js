@@ -11,10 +11,10 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 consign()
-    .include('./routes')
+    .include('./config/mongodb.js')
     .then('./controllers')
     .then('./models')
-    .then('./config/mongo/mongodb.js')
+    .then('./routes')
     .into(app);
 
 module.exports = app;

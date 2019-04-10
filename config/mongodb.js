@@ -1,10 +1,8 @@
-const dotenv = require('dotenv').config,
-    mongodb = require('mongodb').MongoClient;
+require('dotenv').config();
 
-dotenv();
+const mongodb = require('mongodb').MongoClient;
 
 const url = `mongodb://${process.env.USER}:${process.env.PASS}@${process.env.HOST}:${process.env.PORT}/${process.env.DBNAME}`;
-
 const database = new mongodb(url, {
     useNewUrlParser: true,
     useNewUrlParser: true,
@@ -16,5 +14,14 @@ const database = new mongodb(url, {
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 1000
 });
+var connDataBase = function (dados, res){
+	database.connect(function (err) {
+		if (err)
+			res.status(500).json('ERROR CONECTION -- ' + err);
+		else
+			console.log('Connected successfully to MONGODB server')
+	});
+}
 
-module.exports = database;
+module.exports = connDataBase;
+
