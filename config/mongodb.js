@@ -1,6 +1,6 @@
-require('dotenv').config();
+require('../node_modules/dotenv/lib/main').config();
 
-const mongodb = require('mongodb').MongoClient;
+const mongodb = require('../node_modules/mongodb').MongoClient;
 
 const url = `mongodb://${process.env.USER}:${process.env.PASS}@${process.env.HOST}:${process.env.PORT}/${process.env.DBNAME}`;
 const database = new mongodb(url, {
