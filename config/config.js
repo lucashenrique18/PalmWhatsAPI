@@ -12,9 +12,9 @@ app.use(bodyParser.json());
 
 consign()
     .include('./config/mongodb.js')
-    .then('./controllers')
-    .then('./models')
-    .then('./routes')
+    .then('./api/controllers')
+    .then('./api/models')
+    .then('./api/routes')
     .into(app);
 
 module.exports = app;
