@@ -1,10 +1,18 @@
-module.exports.registrar = function(app, req, res){
+module.exports.registrar = async function(app, req, res){
+
+	const dbName = 'whatsdb';
 
 	var dados = req.body;
-	var conn = app.config.mongodb;
+	var database = app.config.mongodb;
 
-	conn();
-
+	var db = database.db(dbName);
+	let collection = db.collection('campanha');
+	collection.insertOne(dados, function (err, records) {
+		if (err)
+			res.json('ERROR INSERTONE -- ' + err);
+		else
+			res.json(records.insertedCount + " -- dado inserido");
+	});
 
 	/*
 	var conn = app.config.mongo.mongodb();

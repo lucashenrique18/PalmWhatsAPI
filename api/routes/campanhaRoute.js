@@ -1,6 +1,5 @@
 module.exports = function(app){
 
-    //var database = require('../config/mongo/mongodb');
     //const dbName = 'whatsdb';
 
     // ! VERBOS E ROTAS ==>
@@ -13,8 +12,8 @@ module.exports = function(app){
     });
 
     app.post('/api', function (req, res) {
-        //app.server.controllers.CampanhaController.registrar(app, req, res);
-        app.controllers.campanhaController.registrar(app, req, res)
+
+        app.api.controllers.campanhaController.registrar(app, req, res)
 
     });
 
