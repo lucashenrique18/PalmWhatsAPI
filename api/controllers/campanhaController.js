@@ -1,32 +1,39 @@
-module.exports.registrar = function(app, req, res){
-
-	const dbName = 'whatsdb';
+module.exports.registrar = async function(app, req, res){
 
 	var dados = req.body;
-	var database = app.config.mongodb;
+	var db = await app.config.mongodb;
+
+	const Story = db.Mongoose.model('Story', db.StorySchema, 'Story');
+	const story1 = new Story({
+		title: 'Casino Royale',
+		author: 'Daniel Craig'   // assign the _id from the person
+	});
+
+	story1.save(function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            res.end();
+            return;
+        }
+        res.json(story1);
+        res.end();
+    });
 
 
-	/*
-	var conn = app.config.mongo.mongodb();
+	/*const Person = mongoose.model('Person', personSchema);
 
-	const dbName = 'whatsdb';
-	const db = conn.database.db(dbName);
+	const author = new Person({
+		_id: new mongoose.Types.ObjectId(),
+		name: 'Ian Fleming',
+		age: 50
+	});
 
-	db.connect(function (err) {
-		if (err)
-			res.status(500).json('ERROR CONECTION -- ' + err);
-		else {
-			console.log('Connected successfully to MONGODB server')
-			const db = database.db(dbName);
-			let collection = db.collection('campanha');
-			collection.insertOne(dados, function (err, records) {
-				if (err)
-					res.json('ERROR INSERTONE -- ' + err);
-				else
-					res.json(records.insertedCount + " -- dado inserido");
-			});
+	author.save(function(err, docs){
+		if (err) return handleError(err);
+		else{
+			res.status(200).json(docs)
 		}
 	});
-	*/
+*/
 
 }

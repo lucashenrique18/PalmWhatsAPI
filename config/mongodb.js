@@ -4,30 +4,41 @@ const dbName = 'whatsdb';
 
 const uri = `mongodb://${process.env.USER}:${process.env.PASS}@${process.env.HOST}:${process.env.PORT}/${process.env.DBNAME}`;
 
+mongoose.Promise = Promise
+mongoose.connection.on('connected', () => {
+  console.log('Connection Established')
+})
+mongoose.connection.on('reconnected', () => {
+  console.log('Connection Reestablished')
+})
+mongoose.connection.on('disconnected', () => {
+  console.log('Connection Disconnected')
+})
+mongoose.connection.on('close', () => {
+  console.log('Connection Closed')
+})
+mongoose.connection.on('error', (error) => {
+  console.log('ERROR: ' + error)
+})
 
-connDataBase = (req, res)=>{
-    mongoose.connect(uri, {useNewUrlParser: true}, function(err){
-        if (err)
-            res.status(500).json('ERROR CONECTION -- ' + err);
-        else {
-            console.log('Connected successfully to MONGODB server')
-        }
-    });
+const run = async () => {
+    await mongoose.connect(uri, {useNewUrlParser: true, autoReconnect: true});
 }
+run().catch(error => console.error(error));
 
-/*const database = new mongodb(url, {
-    useNewUrlParser: true,
-    useNewUrlParser: true,
-    poolSize: 20,
-    socketTimeoutMS: 480000,
-    keepAlive: 300000,
-    keepAliveInitialDelay: 300000,
-    connectTimeoutMS: 30000,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000
-});*/
+const Schema = mongoose.Schema;
 
-module.exports = ()=>{
-    return connDataBase, mongoose;
-};
+const personSchema = Schema({
+    _id: Schema.Types.ObjectId,
+    name: String,
+    age: Number,
+    stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+});
 
+const storySchema = Schema({
+    author: { type: Schema.Types.ObjectId, ref: 'Person' },
+    title: String,
+    fans: [{ type: Schema.Types.ObjectId, ref: 'Person' }]
+});
+
+module.exports = {Mongoose: mongoose, PersonSchema: personSchema, StorySchema: storySchema };
