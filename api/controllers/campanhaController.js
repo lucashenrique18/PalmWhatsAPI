@@ -3,37 +3,22 @@ module.exports.registrar = async function(app, req, res){
 	var dados = req.body;
 	var db = await app.config.mongodb;
 
-	const Story = db.Mongoose.model('Story', db.StorySchema, 'Story');
-	const story1 = new Story({
-		title: 'Casino Royale',
-		author: 'Daniel Craig'   // assign the _id from the person
+	db.Run();
+	const Campanha = db.Mongoose.model('campanha', db.CampanhaSchema, 'campanha');
+	const campanha1 = new Campanha({
+		name: dados.titulo,
+		amont: dados.quantidade   // assign the _id from the person
 	});
 
-	story1.save(function (err) {
+	campanha1.save(async function (err) {
         if (err) {
             res.status(500).json({ error: err.message });
             res.end();
             return;
         }
-        res.json(story1);
+		res.json(campanha1);
+		//se quiser fechar a conexão --> await app.config.mongodb.close();
         res.end();
     });
-
-
-	/*const Person = mongoose.model('Person', personSchema);
-
-	const author = new Person({
-		_id: new mongoose.Types.ObjectId(),
-		name: 'Ian Fleming',
-		age: 50
-	});
-
-	author.save(function(err, docs){
-		if (err) return handleError(err);
-		else{
-			res.status(200).json(docs)
-		}
-	});
-*/
 
 }

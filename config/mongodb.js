@@ -20,25 +20,22 @@ mongoose.connection.on('close', () => {
 mongoose.connection.on('error', (error) => {
   console.log('ERROR: ' + error)
 })
-
 const run = async () => {
     await mongoose.connect(uri, {useNewUrlParser: true, autoReconnect: true});
 }
-run().catch(error => console.error(error));
-
+//run().catch(error => console.error(error));
 const Schema = mongoose.Schema;
 
-const personSchema = Schema({
-    _id: Schema.Types.ObjectId,
+const campanhaSchema = Schema({
     name: String,
-    age: Number,
-    stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+    amont: Number
 });
 
-const storySchema = Schema({
-    author: { type: Schema.Types.ObjectId, ref: 'Person' },
-    title: String,
-    fans: [{ type: Schema.Types.ObjectId, ref: 'Person' }]
-});
+module.exports = {Run: run, Mongoose: mongoose, CampanhaSchema: campanhaSchema};
 
-module.exports = {Mongoose: mongoose, PersonSchema: personSchema, StorySchema: storySchema };
+module.exports.close = ()=>{
+    mongoose.connection.close(function(err){
+        if(err)
+            console.log("ERRO -- " + err);
+    });
+}
