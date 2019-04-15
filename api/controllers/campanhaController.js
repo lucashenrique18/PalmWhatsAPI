@@ -1,24 +1,67 @@
 module.exports.registrar = async function(app, req, res){
 
-	var dados = req.body;
+	var campanha = req.body;
+	//tem que fazer a verificação dos dados aqui embaixo
+
+	var db = await app.config.mongodb;
+	db.Run().catch(error => res.status(500).json(error));
+	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+	campanhaDAO.registrarCampanha(app, campanha, res);
+
+}
+
+module.exports.consultar = async function(app, req, res){
+
+	var campanha = req.body;
+	//tem que fazer a verificação dos dados aqui embaixo
+
+	var db = await app.config.mongodb;
+	db.Run().catch(error => res.status(500).json(error));
+	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+	campanhaDAO.consultarCampanha(app, res);
+
+}
+
+module.exports.consultarID = async function(app, req, res){
+
+	var campanha = req.params;
+	//tem que fazer a verificação dos dados aqui embaixo
+
+	var db = await app.config.mongodb;
+	db.Run().catch(error => res.status(500).json(error));
+	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+	campanhaDAO.consultarCampanhaByID(app, campanha, res);
+
+}
+
+module.exports.alterar = async function(app, req, res){
+
+	var campanha = req.body;
+
+	//tem que fazer a verificação dos dados aqui embaixo
+
 	var db = await app.config.mongodb;
 
-	db.Run();
-	const Campanha = db.Mongoose.model('campanha', db.CampanhaSchema, 'campanha');
-	const campanha1 = new Campanha({
-		name: dados.titulo,
-		amont: dados.quantidade   // assign the _id from the person
-	});
+	db.Run().catch(error => res.status(500).json(error));
 
-	campanha1.save(async function (err) {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            res.end();
-            return;
-        }
-		res.json(campanha1);
-		//se quiser fechar a conexão --> await app.config.mongodb.close();
-        res.end();
-    });
+	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+
+	campanhaDAO.alterarCampanha(app, campanha, res);
+
+}
+
+module.exports.deletar = async function(app, req, res){
+
+	var campanha = req.body;
+
+	//tem que fazer a verificação dos dados aqui embaixo
+
+	var db = await app.config.mongodb;
+
+	db.Run().catch(error => res.status(500).json(error));
+
+	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+
+	campanhaDAO.deletarCampanha(app, campanha, res);
 
 }

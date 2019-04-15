@@ -23,7 +23,6 @@ mongoose.connection.on('error', (error) => {
 const run = async () => {
     await mongoose.connect(uri, {useNewUrlParser: true, autoReconnect: true});
 }
-//run().catch(error => console.error(error));
 const Schema = mongoose.Schema;
 
 const campanhaSchema = Schema({

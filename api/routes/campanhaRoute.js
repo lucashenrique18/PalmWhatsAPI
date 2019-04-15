@@ -19,40 +19,13 @@ module.exports = function(app){
 
     app.get('/api', function (req, res) {
 
-        database.connect(function (err) {
-            if (err)
-                res.status(500).json('ERROR CONECTION -- ' + err);
-            else {
-                console.log('Connected successfully to MONGODB server')
-                const db = database.db(dbName);
-                let collection = db.collection('campanha');
-                collection.find().toArray(function (err, result) {
-                    if (err)
-                        res.json('ERROR FIND -- ' + err);
-                    else
-                        res.json(result);
-                });
-            }
-        });
+        app.api.controllers.campanhaController.consultar(app, req, res)
 
     });
 
     app.get('/api/:id', function (req, res) {
 
-        database.connect(function (err) {
-            if (err)
-                res.status(500).json('ERROR CONECTION -- ' + err);
-            else {
-                const db = database.db(dbName);
-                let collection = db.collection('campanha');
-                collection.find({_id : objectId(req.params.id)}).toArray(function (err, result) {
-                    if (err)
-                        res.json('ERROR FIND BY ID -- ' + err);
-                    else
-                        res.json(result);
-                });
-            }
-        });
+        app.api.controllers.campanhaController.consultarID(app, req, res)
 
     });
 
