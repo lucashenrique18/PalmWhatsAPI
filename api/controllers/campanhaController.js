@@ -12,7 +12,6 @@ module.exports.registrar = async function(app, req, res){
 
 module.exports.consultar = async function(app, req, res){
 
-	var campanha = req.body;
 	//tem que fazer a verificação dos dados aqui embaixo
 
 	var db = await app.config.mongodb;

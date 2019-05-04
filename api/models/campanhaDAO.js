@@ -1,5 +1,5 @@
-function campanhaDAO(db) { 
-	this._db = db; 
+function campanhaDAO(db) {
+	this._db = db;
 }
 
 campanhaDAO.prototype.registrarCampanha = function(app, campanha, res){

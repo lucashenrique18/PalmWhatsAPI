@@ -1,8 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const dbName = 'whatsdb';
 
-const uri = `mongodb://${process.env.USER}:${process.env.PASS}@${process.env.HOST}:${process.env.PORT}/${process.env.DBNAME}`;
+const uri = `mongodb://${process.env.USERN}:${process.env.PASS}@${process.env.HOST}:${process.env.PORT}/${process.env.DBNAME}`;
 
 mongoose.Promise = Promise
 mongoose.connection.on('connected', () => {
@@ -21,20 +20,59 @@ mongoose.connection.on('error', (error) => {
   console.log('ERROR: ' + error)
 })
 const run = async () => {
-    await mongoose.connect(uri, {useNewUrlParser: true, autoReconnect: true});
+  await mongoose.connect(uri, {
+    useNewUrlParser: true,
+    autoReconnect: true
+  });
 }
 const Schema = mongoose.Schema;
 
-const campanhaSchema = Schema({
-    name: String,
-    amont: Number
+const campaignSchema = Schema({
+  name: String,
+  description: String,
+  mailings: [],
 });
 
-module.exports = {Run: run, Mongoose: mongoose, CampanhaSchema: campanhaSchema};
+const mailingSchema = Schema({
+  name: String,
+  contact: {
+    nome: String,
+    cpf: Number,
+    phone: [Number],
+    binded: {type: Boolean, default: false},
+    wchecked: {
+      dateChecked: Date,
+      verified: {type: Boolean, default: false}
+    },
+    status_env: {
+      type: Number,
+      default: 0
+    } //aqui poderia ser do tipo status_env que é outro schema
+  },
+  mDate: {
+    type: Date,
+    default: Date.now
+  },
+  _mailingId: Schema.Types.ObjectId,
+  amont: {
+    type: Number,
+  }
+});
 
-module.exports.close = ()=>{
-    mongoose.connection.close(function(err){
-        if(err)
-            console.log("ERRO -- " + err);
-    });
+const envio = Schema({
+
+})
+
+module.exports = {
+  Run: run,
+  Mongoose: mongoose,
+  CampaignSchema: campaignSchema,
+  MailingSchema: mailingSchema
+};
+
+module.exports.close = () => {
+  mongoose.connection.close(function (err) {
+    if (err)
+      console.log("ERRO -- " + err);
+  });
 }
