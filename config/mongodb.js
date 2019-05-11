@@ -90,7 +90,7 @@ const dispatchConfig = Schema({
       type: Boolean,
       default: false
     },
-    numbers: [Numbers]
+    numbers: [Number]
   },
   mailings: [Schema.Types.ObjectId],
 })
@@ -113,7 +113,9 @@ module.exports = {
   Run: run,
   Mongoose: mongoose,
   CampaignSchema: campaignSchema,
-  MailingSchema: mailingSchema
+  MailingSchema: mailingSchema,
+  Company: company,
+  DispatchConfig: dispatchConfig
 };
 
 module.exports.close = () => {
