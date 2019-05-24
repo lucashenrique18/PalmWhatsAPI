@@ -4,11 +4,9 @@ function campanhaDAO(db) {
 
 campanhaDAO.prototype.registrarCampanha = function(app, dadosCampanha, res){
 
-	const Campanha = this._db.Mongoose.model('campaignSchema', this._db.CampaignSchema, 'campaignSchema');
+	const Campanha = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
 
-	console.log(dadosCampanha);
-
-	const campanha1 = new Campanha({
+	const camp = new Campanha({
 		name: dadosCampanha.name,
 		description: dadosCampanha.description,
 		mailings: dadosCampanha.mailingsId, //! aqui tem que colocar os id de mailings baseados nessa campanha
@@ -17,27 +15,36 @@ campanhaDAO.prototype.registrarCampanha = function(app, dadosCampanha, res){
 		type: dadosCampanha.type,
 	});
 
-	console.log(dadosCampanha);
-	console.log(campanha1);
+	// campanha1.save(async function (err) {
+    //     if (err) {
+    //         res.status(500).json({ error: err.message });
+    //         res.end();
+    //         return;
+    //     }
+	// 	res.json('REGISTRO CAMPANHA REALIZADO - ' + campanha1);
+	// 	app.config.mongodb.close();
+    //     res.end();
+	// });
 
-	campanha1.save(async function (err) {
-        if (err) {
-            res.status(500).json({ error: err.message });
+	camp.save()
+		.then(() => {
+			res.json('REGISTRO CAMPANHA REALIZADO - ' + campanha1);
+			app.config.mongodb.close();
+			res.end();
+		})
+		.catch(() => {
+			res.status(500).json({ error: err.message });
             res.end();
-            return;
-        }
-		res.json('REGISTRO CAMPANHA REALIZADO - ' + campanha1);
-		app.config.mongodb.close();
-        res.end();
-    });
+         	return;
+		})
 
 }
 
 campanhaDAO.prototype.consultarCampanha = function(app, res){
 
-	const Campanha = this._db.Mongoose.model('campaignSchema', this._db.CampaignSchema, 'campaignSchema');
+	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
 
-	Campanha.find({}, function(err, result){
+	Campaign.find({}, function(err, result){
 		if(err){
 			res.status(500).json({ error: err.message });
 			res.end();

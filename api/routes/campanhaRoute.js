@@ -11,13 +11,13 @@ module.exports = function(app){
 
     });
 
-    app.post('/api', function (req, res) {
+    app.post('/api/campanha', function (req, res) {
 
         app.api.controllers.campanhaController.registrar(app, req, res)
 
     });
 
-    app.get('/api', function (req, res) {
+    app.get('/api/campanha', function (req, res) {
 
         app.api.controllers.campanhaController.consultar(app, req, res)
 
