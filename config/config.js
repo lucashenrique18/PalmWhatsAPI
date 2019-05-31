@@ -1,6 +1,7 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
-    consign = require('consign');
+    consign = require('consign'),
+    expressValidator = require('express-validator');
 
 var app = express();
 
@@ -9,6 +10,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(expressValidator());
 
 consign()
     .include('./config/mongodb.js')

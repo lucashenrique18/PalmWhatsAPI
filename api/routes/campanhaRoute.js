@@ -13,7 +13,7 @@ module.exports = function(app){
 
     app.post('/api/campanha', function (req, res) {
 
-        app.api.controllers.campanhaController.registrar(app, req, res)
+        app.api.controllers.campanhaController.save(app, req, res)
 
     });
 

@@ -1,34 +1,23 @@
-function campanhaDAO(db) {
+function campaignDAO(db) {
 	this._db = db;
 }
 
-campanhaDAO.prototype.registrarCampanha = function(app, dadosCampanha, res){
+campaignDAO.prototype.saveCampaign = function(app, dataCamp, res){
 
-	const Campanha = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
 
-	const camp = new Campanha({
-		name: dadosCampanha.name,
-		description: dadosCampanha.description,
-		mailings: dadosCampanha.mailingsId, //! aqui tem que colocar os id de mailings baseados nessa campanha
-		company: dadosCampanha.companyId, //! aqui tem que colocar os id da empresa dessa campanha
-		confDefault: dadosCampanha.confDefaultId, //! aqui tem que colocar os id das configurações do envio
-		type: dadosCampanha.type,
+	const camp = new Campaign({
+		name: dataCamp.name,
+		description: dataCamp.description,
+		mailings: dataCamp.mailingsId, //! aqui tem que colocar os id de mailings baseados nessa campanha
+		company: dataCamp.companyId, //! aqui tem que colocar os id da empresa dessa campanha
+		confDefault: dataCamp.confDefaultId, //! aqui tem que colocar os id das configurações do envio
+		type: dataCamp.type,
 	});
-
-	// campanha1.save(async function (err) {
-    //     if (err) {
-    //         res.status(500).json({ error: err.message });
-    //         res.end();
-    //         return;
-    //     }
-	// 	res.json('REGISTRO CAMPANHA REALIZADO - ' + campanha1);
-	// 	app.config.mongodb.close();
-    //     res.end();
-	// });
 
 	camp.save()
 		.then(() => {
-			res.json('REGISTRO CAMPANHA REALIZADO - ' + campanha1);
+			res.json('REGISTRO CAMPANHA REALIZADO - ' + camp);
 			app.config.mongodb.close();
 			res.end();
 		})
@@ -40,7 +29,7 @@ campanhaDAO.prototype.registrarCampanha = function(app, dadosCampanha, res){
 
 }
 
-campanhaDAO.prototype.consultarCampanha = function(app, res){
+campaignDAO.prototype.consultarCampanha = function(app, res){
 
 	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
 
@@ -57,7 +46,7 @@ campanhaDAO.prototype.consultarCampanha = function(app, res){
 
 }
 
-campanhaDAO.prototype.consultarCampanhaByID = function(app, campanha, res){
+campaignDAO.prototype.consultarCampanhaByID = function(app, campanha, res){
 
 	const Campanha = this._db.Mongoose.model('campaignSchema', this._db.CampaignSchema, 'campaignSchema');
 
@@ -74,7 +63,7 @@ campanhaDAO.prototype.consultarCampanhaByID = function(app, campanha, res){
 
 }
 
-campanhaDAO.prototype.alterarCampanha = function(app, campanha, res){
+campaignDAO.prototype.alterarCampanha = function(app, campanha, res){
 
 	const Campanha = this._db.Mongoose.model('campanha', this._db.CampanhaSchema, 'campanha');
 	const campanha1 = new Campanha({
@@ -95,7 +84,7 @@ campanhaDAO.prototype.alterarCampanha = function(app, campanha, res){
 
 }
 
-campanhaDAO.prototype.deletarCampanha = function(app, campanha, res){
+campaignDAO.prototype.deletarCampanha = function(app, campanha, res){
 
 	const Campanha = this._db.Mongoose.model('campanha', this._db.CampanhaSchema, 'campanha');
 	const campanha1 = new Campanha({
@@ -118,5 +107,5 @@ campanhaDAO.prototype.deletarCampanha = function(app, campanha, res){
 
 
 module.exports = function(){
-	return campanhaDAO;
+	return campaignDAO;
 }

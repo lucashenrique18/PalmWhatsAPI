@@ -1,16 +1,28 @@
-module.exports.registrar = async function(app, req, res){
+module.exports.save = async (app, req, res) =>{
 
-	var campanha = req.body;
-	//tem que fazer a verificação dos dados aqui embaixo
+	var dataCamp = req.body;
+
+	req.assert('name', 'O nome da campanha é obrigatório | atributo: name').notEmpty();
+	req.assert('companyId', 'É necessario o id da empresa | atributo: companyId').notEmpty();
+	req.assert('type', 'O campo tipo é obrigatório e está vazio | atributo: type').notEmpty();
+
+	const err = req.validationErrors();
+	if(err){
+		res.status(400).json(err)
+		return
+	}
 
 	var db = await app.config.mongodb;
-	db.Run().catch(error => res.status(500).json(error));
-	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
-	campanhaDAO.registrarCampanha(app, campanha, res);
-
+	db.Run().catch(error => {
+		res.status(500).json(error);
+		res.end();
+		return
+	});
+	var campaignDAO = new app.api.models.campanhaDAO(db);
+	campaignDAO.saveCampaign(app, dataCamp, res);
 }
 
-module.exports.consultar = async function(app, req, res){
+module.exports.find = async function(app, req, res){
 
 	var db = await app.config.mongodb;
 	db.Run().catch(error => res.status(500).json(error));
