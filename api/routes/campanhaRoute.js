@@ -19,13 +19,13 @@ module.exports = function(app){
 
     app.get('/api/campanha', function (req, res) {
 
-        app.api.controllers.campanhaController.consultar(app, req, res)
+        app.api.controllers.campanhaController.findAll(app, req, res)
 
     });
 
-    app.get('/api/:id', function (req, res) {
+    app.get('/api/campanha/:id', function (req, res) {
 
-        app.api.controllers.campanhaController.consultarID(app, req, res)
+        app.api.controllers.campanhaController.findByID(app, req, res)
 
     });
 

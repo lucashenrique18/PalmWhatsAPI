@@ -22,24 +22,24 @@ module.exports.save = async (app, req, res) =>{
 	campaignDAO.saveCampaign(app, dataCamp, res);
 }
 
-module.exports.find = async function(app, req, res){
+module.exports.findAll = async function(app, req, res){
 
 	var db = await app.config.mongodb;
 	db.Run().catch(error => res.status(500).json(error));
-	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
-	campanhaDAO.consultarCampanha(app, res);
+	var campanhaDAO = new app.api.models.campanhaDAO(db);
+	campanhaDAO.findAll(app, res);
 
 }
 
-module.exports.consultarID = async function(app, req, res){
+module.exports.findByID = async function(app, req, res){
 
 	var campanha = req.params;
 	//tem que fazer a verificação dos dados aqui embaixo
 
 	var db = await app.config.mongodb;
 	db.Run().catch(error => res.status(500).json(error));
-	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
-	campanhaDAO.consultarCampanhaByID(app, campanha, res);
+	var campanhaDAO = new app.api.models.campanhaDAO(db);
+	campanhaDAO.findByID(app, campanha, res);
 
 }
 
