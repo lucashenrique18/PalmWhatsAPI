@@ -13,61 +13,60 @@ module.exports.save = async (app, req, res) =>{
 	}
 
 	var db = await app.config.mongodb;
-	db.Run().catch(error => {
-		res.status(500).json(error);
-		res.end();
-		return
-	});
-	var campaignDAO = new app.api.models.campanhaDAO(db);
-	campaignDAO.saveCampaign(app, dataCamp, res);
+	db.Run()
+		.then( () => {
+			var campaignDAO = new app.api.models.campanhaDAO(db);
+			campaignDAO.saveCampaign(app, dataCamp, res);
+		})
+		.catch(error => res.status(500).json(error));
+
 }
 
 module.exports.findAll = async function(app, req, res){
 
 	var db = await app.config.mongodb;
-	db.Run().catch(error => res.status(500).json(error));
-	var campanhaDAO = new app.api.models.campanhaDAO(db);
-	campanhaDAO.findAll(app, res);
+	db.Run()
+		.then( () => {
+			var campanhaDAO = new app.api.models.campanhaDAO(db);
+			campanhaDAO.findAll(app, res);
+		})
+		.catch(error => res.status(500).json(error));
 
 }
 
 module.exports.findByID = async function(app, req, res){
 
 	var campanha = req.params;
-	//tem que fazer a verificação dos dados aqui embaixo
-
 	var db = await app.config.mongodb;
-	db.Run().catch(error => res.status(500).json(error));
-	var campanhaDAO = new app.api.models.campanhaDAO(db);
-	campanhaDAO.findByID(app, campanha, res);
+	db.Run()
+		.then( () => {
+			var campanhaDAO = new app.api.models.campanhaDAO(db);
+			campanhaDAO.findByID(app, campanha, res);
+		})
+		.catch(error => res.status(500).json(error));
 
 }
 
-module.exports.alterar = async function(app, req, res){
-
-	var campanha = req.body;
-
-	//tem que fazer a verificação dos dados aqui embaixo
+module.exports.alterByID = async function(app, req, res){
 
 	var db = await app.config.mongodb;
-	db.Run().catch(error => res.status(500).json(error));
-	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
-	campanhaDAO.alterarCampanha(app, campanha, res);
+	db.Run()
+		.then( () => {
+			var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+			campanhaDAO.alterByID(app, req, res);
+		})
+		.catch(error => res.status(500).json(error));
 
 }
 
-module.exports.deletar = async function(app, req, res){
-
-	var campanha = req.body;
-
-	//tem que fazer a verificação dos dados aqui embaixo
+module.exports.deleteByID = async function(app, req, res){
 
 	var db = await app.config.mongodb;
-
-	db.Run().catch(error => res.status(500).json(error));
-
-	var campanhaDAO = new app.api.models.campanhaDAO(db, res);
-
-	campanhaDAO.deletarCampanha(app, campanha, res);
+	db.Run()
+		.then( () => {
+			var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+			campanhaDAO.deleteByID(app, req, res);
+		})
+		.catch(error => res.status(500).json(error));
 
 }

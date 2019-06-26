@@ -19,12 +19,9 @@ campaignDAO.prototype.saveCampaign = function(app, data, res){
 		.then(() => {
 			res.json('REGISTRO CAMPANHA REALIZADO - ' + camp);
 			app.config.mongodb.close();
-			res.end();
 		})
 		.catch(() => {
 			res.status(500).json({ error: err.message });
-            res.end();
-         	return;
 		})
 
 }
@@ -33,16 +30,16 @@ campaignDAO.prototype.findAll = function(app, res){
 
 	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
 
-	Campaign.find({}, function(err, result){
-		if(err){
-			res.status(500).json({ error: err.message });
-			res.end();
-			return;
+	Campaign.find({},
+		(err, result) => {
+			if(err){
+				res.status(500).json({ error: err.message });
+				return;
+			}
+			res.json(result);
+			app.config.mongodb.close();
 		}
-		res.json(result);
-		app.config.mongodb.close();
-		res.end();
-	});
+	);
 
 }
 
@@ -50,28 +47,56 @@ campaignDAO.prototype.findByID = function(app, camp, res){
 
 	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
 
-	const ObjectID = this._db.Mongoose.Types.ObjectId;
-
-	Campaign.findById({'_id': new ObjectID(camp.id)}, function (err, result) {
-		if(err){
-			res.status(500).json({ error: err.message });
-			res.end();
-			return;
+	Campaign.findById({'_id': camp.id},
+		(err, result) => {
+			if(err){
+				res.status(500).json({ error: err.message });
+				return;
+			}
+			res.json(result);
+			app.config.mongodb.close();
 		}
-		res.json(result);
-		app.config.mongodb.close();
-		res.end();
-	});
+	);
 
 }
 
-campaignDAO.prototype.alterByID = function(app, campanha, res){
+campaignDAO.prototype.alterByID = function(app, req, res){
 
+	var data = req.body;
+	var params = req.params;
+	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+
+	Campaign.findByIdAndUpdate(params.id, data, {new:true},
+		(err, result) => {
+			if(err){
+				res.status(500).json({ error: err.message });
+				return;
+			}
+			res.json(result);
+			app.config.mongodb.close();
+		}
+	);
 
 }
 
-campaignDAO.prototype.deleteByID = function(app, campanha, res){
+campaignDAO.prototype.deleteByID = function(app, req, res){
 
+	var params = req.params;
+
+	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+
+	console.log(params.id);
+
+	Campaign.findByIdAndRemove(params.id, {rawResult: true},
+		(err, result) => {
+			if(err){
+				res.status(500).json({ error: err.message });
+				return;
+			}
+			res.json(result);
+			app.config.mongodb.close();
+		}
+	);
 
 }
 

@@ -22,7 +22,11 @@ mongoose.connection.on('error', (error) => {
 const run = async () => {
   await mongoose.connect(uri, {
     useNewUrlParser: true,
-    autoReconnect: true
+    autoReconnect: true,
+    poolSize: 10,
+    socketTimeoutMS: 0,
+    keepAlive: true,
+    reconnectTries: 30
   });
 }
 
