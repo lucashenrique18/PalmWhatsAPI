@@ -36,8 +36,8 @@ const run = async () => {
 }
 
 module.exports = {
-  Run: run
-
+  Run: run,
+  Mongoose: mongoose
 };
 
 module.exports.close = () => {

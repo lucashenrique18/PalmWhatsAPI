@@ -53,7 +53,7 @@ module.exports.alterByID = async function(app, req, res){
 	var db = await app.config.mongodb;
 	db.Run()
 		.then( () => {
-			var campanhaDAO = new app.api.models.campanhaDAO(db, res);
+			var campanhaDAO = new app.api.models.campanhaDAO(db);
 			campanhaDAO.alterByID(app, req, res);
 		})
 		.catch(error => res.status(500).json(error));

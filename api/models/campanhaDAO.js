@@ -1,4 +1,4 @@
-schemas = require('./schemas');
+
 
 function campaignDAO(db) {
 	this._db = db;
@@ -6,7 +6,8 @@ function campaignDAO(db) {
 
 campaignDAO.prototype.saveCampaign = function(app, data, res){
 
-	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+	const CampaignSchema = app.api.models.schemas.Campaign;
+	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
 
 	const camp = new Campaign(data)
 
@@ -32,7 +33,8 @@ campaignDAO.prototype.saveCampaign = function(app, data, res){
 
 campaignDAO.prototype.findAll = function(app, res){
 
-	const Campaign = this._db.Mongoose.model('campaign', schemas.CampaignSchema, 'campaign');
+	const CampaignSchema = app.api.models.schemas.Campaign;
+	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
 
 	Campaign.find({},
 		(err, result) => {
@@ -49,13 +51,13 @@ campaignDAO.prototype.findAll = function(app, res){
 
 campaignDAO.prototype.findByID = function(app, camp, res){
 
-	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+	const CampaignSchema = app.api.models.schemas.Campaign;
+	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
 
 	Campaign.findById({'_id': camp.id},
 		(err, result) => {
 			if(err){
 				res.status(500).json({ error: err.message });
-				return;
 			}
 			res.json(result);
 			app.config.mongodb.close();
@@ -68,7 +70,9 @@ campaignDAO.prototype.alterByID = function(app, req, res){
 
 	var data = req.body;
 	var params = req.params;
-	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+
+	const CampaignSchema = app.api.models.schemas.Campaign;
+	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
 
 	Campaign.findByIdAndUpdate(params.id, data, {new:true},
 		(err, result) => {
@@ -87,7 +91,8 @@ campaignDAO.prototype.deleteByID = function(app, req, res){
 
 	var params = req.params;
 
-	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+	const CampaignSchema = app.api.models.schemas.Campaign;
+	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
 
 	console.log(params.id);
 

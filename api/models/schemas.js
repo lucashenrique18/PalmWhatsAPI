@@ -81,8 +81,8 @@ const dispatchConfig = Schema({
 
 module.exports = {
     Mongoose: mongoose,
-    CampaignSchema: campaign,
-    MailingSchema: mailing,
+    Campaign: campaign,
+    Mailing: mailing,
     Company: company,
     DispatchConfig: dispatchConfig
 }
