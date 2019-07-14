@@ -1,3 +1,5 @@
+schemas = require('./schemas');
+
 function campaignDAO(db) {
 	this._db = db;
 }
@@ -30,7 +32,7 @@ campaignDAO.prototype.saveCampaign = function(app, data, res){
 
 campaignDAO.prototype.findAll = function(app, res){
 
-	const Campaign = this._db.Mongoose.model('campaign', this._db.CampaignSchema, 'campaign');
+	const Campaign = this._db.Mongoose.model('campaign', schemas.CampaignSchema, 'campaign');
 
 	Campaign.find({},
 		(err, result) => {

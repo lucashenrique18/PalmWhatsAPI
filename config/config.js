@@ -14,9 +14,9 @@ app.use(expressValidator());
 
 consign()
     .include('./config/mongodb.js')
+    .then('./api/routes')
     .then('./api/controllers')
     .then('./api/models')
-    .then('./api/routes')
     .into(app);
 
 module.exports = app;
