@@ -6,12 +6,8 @@ function campaignDAO(db) {
 
 campaignDAO.prototype.saveCampaign = function(app, data, res){
 
-<<<<<<< HEAD
-	const Campaign = this._db.Mongoose.model('campaign', schemas.CampaignSchema, 'campaign');
-=======
 	const CampaignSchema = app.api.models.schemas.Campaign;
 	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
->>>>>>> 6ba67bf5f67f5b6302371b5220e2f3121954e6d2
 
 	const camp = new Campaign(data)
 
@@ -55,12 +51,8 @@ campaignDAO.prototype.findAll = function(app, res){
 
 campaignDAO.prototype.findByID = function(app, camp, res){
 
-<<<<<<< HEAD
-	const Campaign = this._db.Mongoose.model('campaign', schemas.CampaignSchema, 'campaign');
-=======
 	const CampaignSchema = app.api.models.schemas.Campaign;
 	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
->>>>>>> 6ba67bf5f67f5b6302371b5220e2f3121954e6d2
 
 	Campaign.findById({'_id': camp.id},
 		(err, result) => {
@@ -78,13 +70,9 @@ campaignDAO.prototype.alterByID = function(app, req, res){
 
 	var data = req.body;
 	var params = req.params;
-<<<<<<< HEAD
-	const Campaign = this._db.Mongoose.model('campaign', schemas.CampaignSchema, 'campaign');
-=======
 
 	const CampaignSchema = app.api.models.schemas.Campaign;
 	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
->>>>>>> 6ba67bf5f67f5b6302371b5220e2f3121954e6d2
 
 	Campaign.findByIdAndUpdate(params.id, data, {new:true},
 		(err, result) => {
@@ -103,14 +91,8 @@ campaignDAO.prototype.deleteByID = function(app, req, res){
 
 	var params = req.params;
 
-<<<<<<< HEAD
-	const Campaign = this._db.Mongoose.model('campaign', schemas.CampaignSchema, 'campaign');
-=======
 	const CampaignSchema = app.api.models.schemas.Campaign;
 	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
->>>>>>> 6ba67bf5f67f5b6302371b5220e2f3121954e6d2
-
-	console.log(params.id);
 
 	Campaign.findByIdAndRemove(params.id, {rawResult: true},
 		(err, result) => {
