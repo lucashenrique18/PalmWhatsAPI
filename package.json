@@ -21,6 +21,7 @@
     "eslint": "^5.16.0"
   },
   "scripts": {
+    "start": "node server.js",
     "dev": "nodemon",
     "production": "pm2 start server.js --name WhatsAPI"
   },
