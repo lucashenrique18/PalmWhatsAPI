@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 
 const uri = `mongodb://${process.env.USERN}:${process.env.PASS}@${process.env.HOST}:${process.env.PORT}/${process.env.DBNAME}`;
 
+console.log(uri);
+
 mongoose.Promise = Promise
 
 mongoose.connection.on('connected', () => {
