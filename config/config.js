@@ -17,6 +17,7 @@ consign()
     .then('./api/routes')
     .then('./api/controllers')
     .then('./api/models')
+    .then('./log')
     .into(app);
 
 module.exports = app;

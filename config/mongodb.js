@@ -1,25 +1,31 @@
 require('dotenv').config();
-
+var app = require('./config.js');
 const mongoose = require('mongoose');
+
+const {log} = require('../log/setColors');
+const {ERRO,ALERT,WARNING,DANGER,RUN,CALL,INFO} = require('../log/tipoLog');
 
 const uri = `mongodb://${process.env.USERN}:${process.env.PASS}@${process.env.HOST}:${process.env.DBPORT}/${process.env.DBNAME}`;
 
 mongoose.Promise = Promise
 
+mongoose.connection.on('connecting', () => {
+  log('Trying Create Connection', CALL)
+})
 mongoose.connection.on('connected', () => {
-  console.log('Connection Established')
+  log('Connection Established', RUN)
 })
 mongoose.connection.on('reconnected', () => {
-  console.log('Connection Reestablished')
+  log('Connection Reestablished', INFO)
 })
 mongoose.connection.on('disconnected', () => {
-  console.log('Connection Disconnected')
+  log('Disconnecting', CALL)
 })
 mongoose.connection.on('close', () => {
-  console.log('Connection Closed')
+  log('Connection Closed', RUN)
 })
 mongoose.connection.on('error', (error) => {
-  console.log('ERROR: ' + error)
+  log('ERROR: ' + error, ERRO)
 })
 
 const run = async () => {
@@ -30,9 +36,7 @@ const run = async () => {
     socketTimeoutMS: 0,
     keepAlive: true,
     reconnectTries: 30
-
   });
-
 }
 
 module.exports = {
@@ -43,7 +47,7 @@ module.exports = {
 module.exports.close = () => {
   mongoose.connection.close(function (err) {
     if (err)
-      console.log("ERRO -- " + err);
+      log("ERRO -- " + err, ERRO);
 
   });
 

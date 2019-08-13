@@ -1,24 +1,13 @@
-
-
 function campaignDAO(db) {
 	this._db = db;
 }
 
-campaignDAO.prototype.saveCampaign = function(app, data, res){
+campaignDAO.prototype.save = function(app, data, res){
 
 	const CampaignSchema = app.api.models.schemas.Campaign;
 	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
 
 	const camp = new Campaign(data)
-
-	// const camp = new Campaign({
-	// 	name: data.name,
-	// 	description: data.description,
-	// 	mailings: data.mailingsId, //! aqui tem que colocar os id de mailings baseados nessa campanha
-	// 	company: data.companyId, //! aqui tem que colocar os id da empresa dessa campanha
-	// 	confDefault: data.confDefaultId, //! aqui tem que colocar os id das configurações do envio
-	// 	type: data.type,
-	// });
 
 	camp.save()
 		.then(() => {
@@ -68,8 +57,8 @@ campaignDAO.prototype.findByID = function(app, camp, res){
 
 campaignDAO.prototype.alterByID = function(app, req, res){
 
-	var data = req.body;
-	var params = req.params;
+	const data = req.body;
+	const params = req.params;
 
 	const CampaignSchema = app.api.models.schemas.Campaign;
 	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
@@ -89,7 +78,7 @@ campaignDAO.prototype.alterByID = function(app, req, res){
 
 campaignDAO.prototype.deleteByID = function(app, req, res){
 
-	var params = req.params;
+	const params = req.params;
 
 	const CampaignSchema = app.api.models.schemas.Campaign;
 	const Campaign = this._db.Mongoose.model('campaign', CampaignSchema, 'campaign');
