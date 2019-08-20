@@ -99,3 +99,14 @@ campaignDAO.prototype.deleteByID = function(app, req, res){
 module.exports = function(){
 	return campaignDAO;
 }
+
+/* !! Json de campanha de teste
+{
+	"name": "teste4",
+	"description": "descricaqqwo sadsacampanha testewwww",
+	"mailingsId": ["5cd6e340128ce08132e6f1cb","5cd6e485dd0caa2c44a682ef"],
+	"companyId": "5cd6e340128ce08132e6f1cb",
+	"confDefaultId": "5cd6e340128ce08132e6f1cb",
+	"type": "marketing"
+}
+*/
