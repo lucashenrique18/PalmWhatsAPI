@@ -63,7 +63,7 @@ const company = Schema({
     }
 });
 
-const dispatchConfig = Schema({
+const dispatch = Schema({
     queue: Number,
     description: String,
     cadence: Number,
@@ -84,5 +84,5 @@ module.exports = {
     Campaign: campaign,
     Mailing: mailing,
     Company: company,
-    DispatchConfig: dispatchConfig
+    Dispatch: dispatch
 }
