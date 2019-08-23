@@ -15,7 +15,7 @@ const mailing = Schema({
     name: String,
     contact: [{
       name: String,
-      cpf: Number,
+      cpf: String,
       phone: [Number],
       binded: {
         type: Boolean,
@@ -31,8 +31,8 @@ const mailing = Schema({
       statusSend: {
         type: Number,
         default: 0
-      }, //aqui poderia ser do tipo status_env que é outro schema
-      keyfield: [],
+      },
+      keyfield: [String],
     }],
     mailingDate: {
       type: Date,
@@ -77,6 +77,23 @@ const dispatch = Schema({
       numbers: [Number]
     },
     mailings: [Schema.Types.ObjectId],
+});
+
+const history = Schema({
+  queue: Number,
+  lastStatus: Number,
+  idContact: Schema.Types.ObjectId,
+  phone: Number,
+  mailing: Schema.Types.ObjectId,
+  dateStart: Date,
+  conversation: [{
+    dataSend: Date,
+    dateReceived: Date,
+    dataViewed: Date,
+    Msg: String,
+    me: Boolean,
+  }]
+
 })
 
 module.exports = {
@@ -84,5 +101,6 @@ module.exports = {
     Campaign: campaign,
     Mailing: mailing,
     Company: company,
-    Dispatch: dispatch
+    Dispatch: dispatch,
+    History: history
 }

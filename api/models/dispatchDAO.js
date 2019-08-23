@@ -104,6 +104,17 @@ module.exports = function(){
 
 /* CONFIG DE ENVIO EXEMPLO
 
-
+{
+	"queue": 10,
+	"description": "COnfiguração de teste",
+	"cadence": 2,
+	"initDt": "2019-10-10",
+	"endDt": "2019-10-11",
+	"internalNumbers": {
+		"bool": true,
+		"numbers": [11953721616]
+	},
+	"mailings": ["5d5b5091d63ed763574653d5"]
+}
 
 */

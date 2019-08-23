@@ -1,7 +1,7 @@
 var app = require('./config/config');
 
 const log = app.log.setColors.log;
-const {ERRO,ALERT,WARNING,DANGER,RUN,CALL,INFO} = app.log.tipoLog;
+const {ERRO,ALERT,WARNING,DANGER,OK,CALL,INFO} = app.log.tipoLog;
 
 const port = process.env.PORT || 10101;
 
@@ -12,6 +12,6 @@ app.listen(port, (err) => {
         log(`Servidor não conseguiu alocar porta ${port} ---- ${err}`, ERRO)
         return;
     }
-    log(`${port} alocada para o app`, RUN)
+    log(`${port} alocada para o app`, OK)
     log('Servidor está está escutando http://localhost:' + port, INFO);
 })

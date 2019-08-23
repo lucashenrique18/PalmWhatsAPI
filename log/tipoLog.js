@@ -3,7 +3,7 @@ module.exports = {
     ALERT: 'alert',
     WARNING: 'warning',
     DANGER: 'danger',
-    RUN: 'run',
+    OK: 'ok',
     CALL: 'call',
     INFO: 'info'
 };
