@@ -14,7 +14,7 @@ campaignDAO.prototype.save = function(app, data, res){
 			res.json('REGISTRO CAMPANHA REALIZADO - ' + camp);
 			app.config.mongodb.close();
 		})
-		.catch(() => {
+		.catch((err) => {
 			res.status(500).json({ error: err.message });
 		})
 

@@ -1,7 +1,20 @@
 module.exports.save = async (app, req, res) =>{
 
-	const dataMail = req.body;
+	// let multer = require('multer');
 
+	const dataMail = req.body;
+/*
+	const storage = multer.diskStorage({
+		destination: (req, file, cb) => {
+			cb(null, '../../public/mailings')
+		},
+		filename: (req, file, cb) => {
+			cb(null, file.fieldname + '-' + Date.now())
+		}
+	});
+	const upload = multer({storage: storage});
+	upload.single('mailingfile');
+*/
 	const db = await app.config.mongodb;
 	db.Run()
 		.then( () => {

@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const campaign = Schema({
-    name: String,
+    name: {type: String, required: true},
     description: String,
     mailings: [Schema.Types.ObjectId],
-    company: Schema.Types.ObjectId,
-    confDefault: Schema.Types.ObjectId,
-    type: String,
+    company: {type: [Schema.Types.ObjectId], required: true},
+    confDefault: {type: [Schema.Types.ObjectId], required: true},
+    type: {type: String, required: true},
 });
 
 const mailing = Schema({
-    name: String,
+    name: {type: String, required: true},
     contact: [{
       name: String,
       cpf: String,
-      phone: [Number],
+      phone: {type: [Number], required: true},
       binded: {
         type: Boolean,
         default: false
@@ -38,6 +38,11 @@ const mailing = Schema({
       type: Date,
       default: Date.now
     },
+    fileInfo: {
+      name: String,
+      path: String,
+      size: Number,
+    },
     amont: Number, //aqui eu tenho que fazer uma função pra verficar a quantidade de contacts, pode ser contact.lenght
     message: {
       mTxt: String,
@@ -51,12 +56,12 @@ const mailing = Schema({
 });
 
 const company = Schema({
-    name: String,
+    name: {type: String, required: true},
     description: String,
-    active: Boolean,
-    credits: Number,
-    campaignMax: Number,
-    simultaneosSend: Number,
+    active: {type: Boolean, default: false},
+    credits: {type: Number, default: 0},
+    campaignMax: {type: Number, default: 0},
+    simultaneosSend: {type: Number, default: 0},
     manualSend: {
       type: Boolean,
       default: false
@@ -64,9 +69,9 @@ const company = Schema({
 });
 
 const dispatch = Schema({
-    queue: Number,
+    queue: {type: Number, required: true},
     description: String,
-    cadence: Number,
+    cadence: {type: Number, required: true},
     initDt: Date,
     endDt: Date,
     internalNumbers: {

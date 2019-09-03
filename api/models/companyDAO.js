@@ -15,7 +15,7 @@ companyDAO.prototype.save= function(app, data, res){
 			res.json('REGISTRO EMPRESA REALIZADO - ' + comp);
 			app.config.mongodb.close();
 		})
-		.catch(() => {
+		.catch((err) => {
 			res.status(500).json({ error: err.message });
 		})
 

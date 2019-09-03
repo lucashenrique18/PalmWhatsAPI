@@ -15,7 +15,7 @@ dispatchDAO.prototype.save= function(app, data, res){
 			res.json('REGISTRO CONFIGURAÇÃO DE ENVIO REALIZADA - ' + disp);
 			app.config.mongodb.close();
 		})
-		.catch(() => {
+		.catch((err) => {
 			res.status(500).json({ error: err.message });
 		})
 

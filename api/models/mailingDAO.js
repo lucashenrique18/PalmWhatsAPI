@@ -2,7 +2,6 @@ function mailingDAO(db) {
 	this._db = db;
 }
 
-
 mailingDAO.prototype.save= function(app, data, res){
 
 	const MailingSchema = app.api.models.schemas.Mailing;
@@ -15,7 +14,7 @@ mailingDAO.prototype.save= function(app, data, res){
 			res.json('REGISTRO MAILING REALIZADO - ' + mail);
 			app.config.mongodb.close();
 		})
-		.catch(() => {
+		.catch((err) => {
 			res.status(500).json({ error: err.message });
 		})
 
