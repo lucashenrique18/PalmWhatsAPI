@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const Schema = mongoose.Schema;
 
@@ -101,11 +102,36 @@ const history = Schema({
 
 })
 
+const user = Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    validate: value => {
+      if(!validator.isEmail(value))
+        throw new Error({error: 'Invalid Email address'})
+    }
+  },
+  password: {
+    type: String,
+    required: true,
+    minLength: 8
+  },
+  company: Schema.Types.ObjectId
+})
+
 module.exports = {
     Mongoose: mongoose,
     Campaign: campaign,
     Mailing: mailing,
     Company: company,
     Dispatch: dispatch,
-    History: history
+    History: history,
+    User: user
 }
