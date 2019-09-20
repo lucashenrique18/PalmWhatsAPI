@@ -121,7 +121,8 @@ const user = Schema({
   password: {
     type: String,
     required: true,
-    minLength: 8
+    minLength: 8,
+    trim: true,
   },
   company: Schema.Types.ObjectId
 })

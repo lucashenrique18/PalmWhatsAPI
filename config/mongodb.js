@@ -35,7 +35,8 @@ const run = async () => {
     poolSize: 10,
     socketTimeoutMS: 0,
     keepAlive: true,
-    reconnectTries: 30
+    reconnectTries: 30,
+    useCreateIndex: true
   });
 }
 
@@ -48,7 +49,5 @@ module.exports.close = () => {
   mongoose.connection.close(function (err) {
     if (err)
       log("ERRO -- " + err, ERRO);
-
   });
-
 }

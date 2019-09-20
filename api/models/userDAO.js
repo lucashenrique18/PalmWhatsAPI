@@ -2,8 +2,7 @@ function userDAO(db) {
 	this._db = db;
 }
 
-
-userDAO.prototype.save= function(app, data, res){
+userDAO.prototype.save= async function(app, data, res){
 
 	const UserSchema = app.api.models.schemas.User;
 	const User = this._db.Mongoose.model('user', UserSchema, 'user');
