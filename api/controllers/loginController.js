@@ -1,9 +1,12 @@
 module.exports.login = async function(app, req, res){
 
 	const bcrypt = require('bcrypt');
+	const jwt = require('jsonwebtoken');
 
 	const data = req.body;
 	const db = await app.config.mongodb;
+
+	console.log(req.decoded)
 	db.Run()
 		.then( async () => {
 			const loginDAO = new app.api.models.loginDAO(db);
@@ -11,8 +14,13 @@ module.exports.login = async function(app, req, res){
 
 			bcrypt.compare(data.password, resultado.password)
 				.then(match => {
-					if(match)
-						res.json(resultado);
+					if(match){
+						const payload = { user: data.email };
+						const options = {expiresIn: '3h'};
+						const secret = process.env.JWT_SECRET;
+						const token = jwt.sign(payload, secret, options);
+						res.json({user: resultado, jwt: {token: token, expiresIn: options.expiresIn}});
+					}
 					else
 						res.status(401).json({message: 'Authentication error'});
 				})

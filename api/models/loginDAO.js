@@ -20,6 +20,7 @@ loginDAO.prototype.findUser = async function(app, data, res){
 		}
 	);
 
+	app.config.mongodb.close();
 	return resultado;
 
 }
