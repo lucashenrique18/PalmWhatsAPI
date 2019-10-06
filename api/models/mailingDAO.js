@@ -32,7 +32,7 @@ mailingDAO.prototype.findAll = function(app, res){
 				return;
 			}
 			res.json(result);
-			app.config.mongodb.close();
+			// app.config.mongodb.close();
 		}
 	);
 
