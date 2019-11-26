@@ -3,7 +3,7 @@ var app = require('./config/config');
 const log = app.log.setColors.log;
 const {ERRO,ALERT,WARNING,DANGER,OK,CALL,INFO} = app.log.tipoLog;
 
-const port = process.env.PORT || 10101;
+const port = process.env.APPPORT || 10101;
 
 log(`Alocando porta ${port} para escuta do app`, CALL);
 
