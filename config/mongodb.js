@@ -1,11 +1,11 @@
 require('dotenv').config();
-var app = require('./config.js');
+
 const mongoose = require('mongoose');
 
 const {log} = require('../log/setColors');
 const {ERRO,ALERT,WARNING,DANGER,OK,CALL,INFO} = require('../log/tipoLog');
 
-const uri = `mongodb://${process.env.USERN}:${process.env.PASS}@${process.env.HOST}:${process.env.DBPORT}/${process.env.DBNAME}`;
+const uri = `mongodb://${process.env.DBUSERN}:${process.env.DBPASS}@${process.env.DBHOST}:${process.env.DBPORT}/${process.env.DBNAME}`;
 
 mongoose.Promise = Promise
 

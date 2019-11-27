@@ -3,7 +3,7 @@ const express = require('express'),
     cors = require('cors'),
     consign = require('consign');
 
-var app = express();
+const app = express();
 
 // utilizando o cors
 app.use(cors({origin: 'http://localhost:3000'}));
@@ -17,7 +17,8 @@ app.use(bodyParser.json());
 
 consign()
     .include('./config/mongodb.js')
-    .then('./api/utils')
+    .include('./config/redis.js')
+    .then('./api/services')
     .then('./api/routes')
     .then('./api/controllers')
     .then('./api/models')

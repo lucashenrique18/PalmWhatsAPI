@@ -1,7 +1,7 @@
-var app = require('./config/config');
+const app = require('./config/config');
 
 const log = app.log.setColors.log;
-const {ERRO,ALERT,WARNING,DANGER,OK,CALL,INFO} = app.log.tipoLog;
+const {ERRO, OK, CALL, INFO} = app.log.tipoLog;
 
 const port = process.env.APPPORT || 10101;
 
