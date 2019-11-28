@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 consign()
     .include('./config/mongodb.js')
-    .include('./config/redis.js')
+    .then('./config/redis.js')
     .then('./api/services')
     .then('./api/routes')
     .then('./api/controllers')
