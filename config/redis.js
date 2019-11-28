@@ -8,7 +8,7 @@ const port_redis = process.env.REDISPORT || 6379
 const redis_client = redis.createClient(
   {
     port: port_redis,
-    host: process.env.REDISHOST,
+    host: process.env.REDIS_HOST,
     auth_pass: process.env.REDIS_PASS
   }
 )
