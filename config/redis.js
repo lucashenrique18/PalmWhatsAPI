@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config()
 const redis = require("redis")
 
-const {log} = require('../log/setColors');
-const {ERRO, OK, INFO, CALL, WARNING} = require('../log/tipoLog');
+const {log} = require('../log/setColors')
+const {ERRO, OK, INFO, CALL, WARNING} = require('../log/tipoLog')
 
 const port_redis = process.env.REDIS_PORT || 6379
 const redis_client = redis.createClient(

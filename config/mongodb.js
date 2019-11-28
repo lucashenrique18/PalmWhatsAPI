@@ -1,11 +1,9 @@
-require('dotenv').config();
+require('dotenv').config()
+const mongoose = require('mongoose')
+const {log} = require('../log/setColors')
+const {ERRO, OK, CALL, INFO} = require('../log/tipoLog')
 
-const mongoose = require('mongoose');
-
-const {log} = require('../log/setColors');
-const {ERRO,ALERT,WARNING,DANGER,OK,CALL,INFO} = require('../log/tipoLog');
-
-const uri = `mongodb://${process.env.DBUSERN}:${process.env.DBPASS}@${process.env.DBHOST}:${process.env.DBPORT}/${process.env.DBNAME}`;
+const uri = `mongodb://${process.env.DBUSERN}:${process.env.DBPASS}@${process.env.DBHOST}:${process.env.DBPORT}/${process.env.DBNAME}`
 
 mongoose.Promise = Promise
 
@@ -37,17 +35,17 @@ const run = async () => {
     keepAlive: true,
     reconnectTries: 30,
     useCreateIndex: true
-  });
+  })
 }
 
 module.exports = {
   Run: run,
   Mongoose: mongoose
-};
+}
 
 module.exports.close = () => {
-  mongoose.connection.close(function (err) {
+  mongoose.connection.close((err) => {
     if (err)
-      log("ERRO -- " + err, ERRO);
-  });
+      log("ERRO -- " + err, ERRO)
+  })
 }
