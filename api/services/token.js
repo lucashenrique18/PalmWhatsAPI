@@ -14,11 +14,16 @@ module.exports = {
         req.decoded = result;
         next();
       } catch (err) {
-        throw new Error(err);
+        result = {
+          status: 0,
+          message: `Authentication error. Invalid token.`,
+        };
+        res.status(401).send(result);
       }
     } else {
       result = {
-        error: `Authentication error. Token required.`,
+        status: 0,
+        message: `Authentication error. Token required.`,
       };
       res.status(401).send(result);
     }
