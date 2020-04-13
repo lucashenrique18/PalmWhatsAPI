@@ -8,13 +8,19 @@ const campaign = Schema({
   description: String,
   mailings: [Schema.Types.ObjectId],
   company: { type: [Schema.Types.ObjectId], required: true },
-  confDefault: { type: [Schema.Types.ObjectId], required: true },
-  type: { type: String, required: true }
+  type: { type: String, required: true },
+  message: {
+    mTxt: String,
+    nameKey: {
+      type: Boolean,
+      default: true
+    }
+  },
 });
 
 const mailing = Schema({
   name: { type: String, required: true },
-  contact: [
+  contacts: [
     {
       name: String,
       cpf: String,
@@ -46,14 +52,7 @@ const mailing = Schema({
     path: String,
     size: Number
   },
-  amont: Number, //aqui eu tenho que fazer uma função pra verficar a quantidade de contacts, pode ser contact.lenght
-  message: {
-    mTxt: String,
-    nameKey: {
-      type: Boolean,
-      default: true
-    }
-  },
+  amont: Number,
   status: { type: Number, default: 0 },
   campaign: Schema.Types.ObjectId
 });
@@ -72,7 +71,7 @@ const company = Schema({
 });
 
 const dispatch = Schema({
-  queue: { type: Number, required: true },
+  name: String,
   description: String,
   cadence: { type: Number, required: true },
   initDt: Date,
@@ -83,8 +82,7 @@ const dispatch = Schema({
       default: false
     },
     numbers: [Number]
-  },
-  mailings: [Schema.Types.ObjectId]
+  }
 });
 
 const history = Schema({
@@ -99,7 +97,7 @@ const history = Schema({
       dataSend: Date,
       dateReceived: Date,
       dataViewed: Date,
-      Msg: String,
+      msg: String,
       me: Boolean
     }
   ]
@@ -130,6 +128,20 @@ const user = Schema({
   company: Schema.Types.ObjectId
 });
 
+const queue = Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    minLength: 8,
+  },
+  description: String,
+  dispatch: Schema.Types.ObjectId,
+  campaign: Schema.Types.ObjectId,
+  status: {type: Boolean, required: true, default: false},
+  mailing: Schema.Types.ObjectId
+});
+
 module.exports = {
   Mongoose: mongoose,
   Campaign: campaign,
@@ -137,5 +149,6 @@ module.exports = {
   Company: company,
   Dispatch: dispatch,
   History: history,
-  User: user
+  User: user,
+  Queue: queue
 };

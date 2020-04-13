@@ -18,7 +18,6 @@ userDAO.prototype.save = async function(app, data, res) {
           message: "User created successfully",
           result: { name: usr.name, email: usr.email }
         });
-      app.config.mongodb.close();
     })
     .catch(err =>
       res.status(500).json({ status: 0, message: err.message, result: null })
@@ -35,7 +34,6 @@ userDAO.prototype.findAll = function(app, res) {
       return;
     }
     res.status(200).json({ status: 1, message: "ok", result });
-    app.config.mongodb.close();
   });
 };
 
@@ -49,7 +47,6 @@ userDAO.prototype.findByID = function(app, usr, res) {
       return;
     }
     res.status(200).json({ status: 1, message: "ok", result });
-    app.config.mongodb.close();
   });
 };
 
@@ -66,7 +63,6 @@ userDAO.prototype.alterByID = function(app, req, res) {
       return;
     }
     res.status(200).json({ status: 1, message: "ok", result });
-    app.config.mongodb.close();
   });
 };
 
@@ -82,7 +78,6 @@ userDAO.prototype.deleteByID = function(app, req, res) {
       return;
     }
     res.status(200).json({ status: 1, message: "ok", result });
-    app.config.mongodb.close();
   });
 };
 

@@ -18,7 +18,7 @@ module.exports.login = async function(app, req, res){
 						const options = {expiresIn: '3h'};
 						const secret = process.env.JWT_SECRET;
 						const token = jwt.sign(payload, secret, options);
-						res.json({user: resultado, jwt: {token: token, expiresIn: options.expiresIn}});
+						res.json({jwt: {token: token, expiresIn: options.expiresIn}});
 					}
 					else
 						res.status(401).json({message: 'Authentication error'});

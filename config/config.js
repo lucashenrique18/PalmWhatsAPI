@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 
-consign()
+consign({verbose: true})
     .include('./config/mongodb.js')
     .then('./config/redis.js')
     .then('./api/services')
