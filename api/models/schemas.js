@@ -38,6 +38,7 @@ const mailing = Schema({
       },
       statusSend: {
         type: Number,
+        enum : [0, 1, 2, 3, 4], //0 = não enviado, 1 = na fila de envio (reservado), 2 = enviado, 3 = enviado/recebido, 4 = enviado/recebido/visualizado
         default: 0
       },
       keyfield: [String]
@@ -53,6 +54,7 @@ const mailing = Schema({
     size: Number
   },
   amont: Number,
+  spin: {type: Number, default: 0},
   status: { type: Number, default: 0 },
   campaign: Schema.Types.ObjectId
 });
@@ -133,12 +135,16 @@ const queue = Schema({
     type: String,
     required: true,
     trim: true,
-    minLength: 8,
+    minLength: 5,
   },
   description: String,
   dispatch: Schema.Types.ObjectId,
   campaign: Schema.Types.ObjectId,
-  status: {type: Boolean, required: true, default: false},
+  status: {
+    type: Number,
+    enum : [0, 1, 2, 3, 4], //0 = fechado, 1 = aberto, 2 = enviando, 3 = processando, 4 = finalizado
+    default: 0
+  },
   mailing: Schema.Types.ObjectId
 });
 

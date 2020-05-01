@@ -12,7 +12,7 @@ queueDAO.prototype.save = function(app, data, res){
 
 	queue.save()
 		.then(() => {
-			res.json('REGISTRO CONFIGURAÇÃO DE ENVIO REALIZADA - ' + queue);
+			res.status(200).json({ status: 1, message: "ok", result: queue });
 			app.config.mongodb.close();
 		})
 		.catch((err) => {
@@ -100,19 +100,3 @@ queueDAO.prototype.deleteByID = function(app, req, res){
 module.exports = function(){
 	return queueDAO;
 }
-
-
-/* CONFIG DE ENVIO EXEMPLO
-
-	name: {
-    type: String,
-    required: true,
-    trim: true,
-    minLength: 8,
-  },
-  description: String,
-  dispatch: Schema.Types.ObjectId,
-  campaign: Schema.Types.ObjectId,
-  status: {type: Boolean, required: true, default: true}
-
-*/
