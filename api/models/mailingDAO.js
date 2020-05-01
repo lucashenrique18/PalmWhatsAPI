@@ -95,7 +95,7 @@ mailingDAO.prototype.deleteByID = function(app, req, res){
 
 mailingDAO.prototype.findContacts = async function(app, req, res){
 
-	const { binded, qtd } = req.query
+	const { statusSend, qtd } = req.query
 	const { id } = req.params
 
 	const objetctId = mongoose.Types.ObjectId(id);
@@ -103,12 +103,11 @@ mailingDAO.prototype.findContacts = async function(app, req, res){
 	const MailingSchema = app.api.models.schemas.Mailing;
 	const Mailing = this._db.Mongoose.model('mailing', MailingSchema, 'mailing');
 
-
 	const result = await Mailing.aggregate(
 		[
 			{$match: {"_id": objetctId}},
 			{$unwind:"$contacts"},
-			{$match: {"contacts.binded": binded == 'true'}},
+			{$match: {"contacts.statusSend": parseInt(statusSend)}},
 			{$limit : parseInt(qtd)},
 			{$group:{_id:'$_id', contacts:{$push:'$contacts'}}}
 		]
@@ -147,9 +146,10 @@ mailingDAO.prototype.alterContactById = function(app, req, res){
 	const MailingSchema = app.api.models.schemas.Mailing;
 	const Mailing = this._db.Mongoose.model('mailing', MailingSchema, 'mailing');
 
-	Mailing.updateOne(
-		{_id: params.id, "contacts._id": data.idContact},
-		{$set: {"contacts.$.binded": data.binded}},
+	Mailing.updateMany(
+		{_id: params.id},
+		{$set: {"contacts.$[element].statusSend": data.statusSend}},
+		{arrayFilters: [{ 'element._id': {$in: [...data.idContact]}}]},
 		(err, result) => {
 			if(err){
 				res.status(500).json({ error: err.message });
